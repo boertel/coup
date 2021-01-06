@@ -1,65 +1,86 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import coups from "./data.json";
 
-export default function Home() {
+export async function getStaticProps({ params }) {
+  const years = {};
+  coups
+    .filter(({ year }) => !!year)
+    .forEach(coup => {
+      years[coup.year] = years[coup.year] || [];
+      years[coup.year].push(coup);
+    });
+  return { props: { years } };
+}
+
+export default function Home({ years }) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
+    <div style={{ margin: "60px auto", width: "800px" }}>
+      <div>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://en.wikipedia.org/wiki/List_of_coups_and_coup_attempts_by_country"
           target="_blank"
-          rel="noopener noreferrer"
+          style={{ color: "blue", textDecoration: "underline" }}
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+          From Wikipedia
+        </a>{" "}
+        [{" "}
+        <a
+          href="/data.json"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          json
+        </a>{" "}
+        |{" "}
+        <a
+          href="/data.csv"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          csv
+        </a>{" "}
+        ]
+      </div>
+      <div>
+        {Object.keys(years)
+          .sort((a, z) => z - a)
+          .map(year =>
+            years[year].map((coup, index) => (
+              <>
+                {index === 0 && (
+                  <>
+                    <hr size={1} style={{ marginTop: "60px", height: "1px" }} />
+                    <h1>{coup.year}</h1>
+                  </>
+                )}
+                <h4 style={{ marginBottom: "12px" }}>{coup.country}</h4>
+                <p>{coup.text}</p>
+              </>
+            ))
+          )}
+      </div>
+      <hr size={1} style={{ marginBottom: "40px" }} />
+      <div>
+        <a
+          href="https://en.wikipedia.org/wiki/List_of_coups_and_coup_attempts_by_country"
+          target="_blank"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          From Wikipedia
+        </a>{" "}
+        [{" "}
+        <a
+          href="/data.json"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          json
+        </a>{" "}
+        |{" "}
+        <a
+          href="/data.csv"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          csv
+        </a>{" "}
+        ]
+      </div>
     </div>
-  )
+  );
 }
