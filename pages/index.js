@@ -59,10 +59,10 @@ export default function Home({ years }) {
                       <h1>{coup.year}</h1>
                     </>
                   )}
-                  <h4 style={{ marginBottom: "12px" }} title={coup.date}>
+                  <h4 style={{ marginBottom: "6px" }} title={coup.date}>
                     {coup.country}
                   </h4>
-                  <p>{coup.text}</p>
+                  <p style={{marginTop: 0}}>{coup.text}</p>
                 </>
               ))
             )}
@@ -74,7 +74,7 @@ export default function Home({ years }) {
             target="_blank"
             style={{ color: "blue", textDecoration: "underline" }}
           >
-            From Wikipedia
+            from Wikipedia
           </a>{" "}
           [{" "}
           <a
