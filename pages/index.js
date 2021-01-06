@@ -1,4 +1,4 @@
-import coups from "./data.json";
+import coups from "../public/data.json";
 
 export async function getStaticProps({ params }) {
   const years = {};
@@ -13,7 +13,7 @@ export async function getStaticProps({ params }) {
 
 export default function Home({ years }) {
   return (
-    <div style={{ margin: "60px auto", width: "800px" }}>
+    <div style={{ margin: "50px auto", padding: '10px', maxWidth: "800px" }}>
       <div>
         <a
           href="https://en.wikipedia.org/wiki/List_of_coups_and_coup_attempts_by_country"
@@ -50,7 +50,7 @@ export default function Home({ years }) {
                     <h1>{coup.year}</h1>
                   </>
                 )}
-                <h4 style={{ marginBottom: "12px" }}>{coup.country}</h4>
+                <h4 style={{ marginBottom: "12px" }} title={coup.date}>{coup.country}</h4>
                 <p>{coup.text}</p>
               </>
             ))
